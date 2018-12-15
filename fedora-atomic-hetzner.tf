@@ -34,6 +34,9 @@ resource "hcloud_server" "atomic" {
       "shutdown -r +0",
     ]
   }
+  provisioner "remote-exec" {
+    inline = [":"]
+  }
 }
 
 output "ipv4" {
