@@ -15,7 +15,8 @@ resource "hcloud_ssh_key" "default" {
 
 # Create a server
 resource "hcloud_server" "atomic" {
-  name = "fedora-atomic"
+  count = 1
+  name = "fedora-atomic-${count.index}"
   image = "fedora-28"  # not relevant
   server_type = "cx11"
   rescue = "linux64"
@@ -40,11 +41,11 @@ resource "hcloud_server" "atomic" {
 }
 
 output "ipv4" {
-  value = "${hcloud_server.atomic.ipv4_address}"
+  value = "${hcloud_server.atomic.*.ipv4_address}"
 }
 
 output "ipv6" {
-  value = "${hcloud_server.atomic.ipv6_address}"
+  value = "${hcloud_server.atomic.*.ipv6_address}"
 }
 
 output "user" {
