@@ -35,8 +35,16 @@ resource "hcloud_server" "atomic" {
       "shutdown -r +0",
     ]
   }
+  provisioner "file" {
+    source = "consul.sh"
+    destination = "/tmp/consul.sh"
+  }
   provisioner "remote-exec" {
-    inline = [":"]
+    inline = [
+      "hostnamectl set-hostname ${self.name}",
+      "chmod +x /tmp/consul.sh",
+      "/tmp/consul.sh ${self.ipv4_address} ${hcloud_server.atomic.0.ipv4_address} ${self.count} ${self.datacenter}",
+    ]
   }
 }
 
