@@ -1,4 +1,6 @@
-#!/bin/sh -ex
+#!/bin/bash
+
+set -ex -o pipefail
 
 curl -sSL https://getfedora.org/atomic_raw_x86_64_latest | unxz > /dev/sda
 vgscan --mknodes
