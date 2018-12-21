@@ -39,6 +39,7 @@ Group=$user
 WantedBy=multi-user.target
 EOF
 
-systemctl start consul
 systemctl enable consul
+systemctl start consul
+systemctl is-active --quiet consul
 
