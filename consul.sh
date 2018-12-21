@@ -13,7 +13,7 @@ adduser $user
 
 sudo -u $user mkdir /home/$user/data
 sudo -u $user podman pull --quiet consul
-sudo -u $user podman run --detach \
+sudo -u $user podman container create \
   --volume /home/$user/data:/consul/data:Z \
   --net=host \
   --name consul \
