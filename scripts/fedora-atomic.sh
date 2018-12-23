@@ -2,7 +2,7 @@
 
 set -ex -o pipefail
 
-curl -sSL https://getfedora.org/atomic_raw_x86_64_latest | unxz > /dev/sda
+curl -sSL --http1.1 https://getfedora.org/atomic_raw_x86_64_latest | unxz > /dev/sda
 vgscan --mknodes
 mkdir root
 mount /dev/atomicos/root root

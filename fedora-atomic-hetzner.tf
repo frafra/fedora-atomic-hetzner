@@ -9,41 +9,48 @@ provider "hcloud" {
 
 # Create a new SSH key
 resource "hcloud_ssh_key" "default" {
-  name = "terraform"
+  name       = "terraform"
   public_key = "${file("~/.ssh/id_rsa.pub")}"
+}
+
+# Encryption key (base64)
+resource "random_string" "encryption_key" {
+  length           = 32
+  override_special = "+/"
 }
 
 # Create a server
 resource "hcloud_server" "atomic" {
-  count = 1
-  name = "fedora-atomic-${count.index}"
-  image = "fedora-28"  # not relevant
+  count       = 2
+  name        = "fedora-atomic-${count.index}"
+  image       = "fedora-28"  # not relevant
   server_type = "cx11"
-  rescue = "linux64"
-  ssh_keys = ["${hcloud_ssh_key.default.id}"]
-  labels = {
-    os = "fedora-atomic",
-  }
+  rescue      = "linux64"
+  ssh_keys    = ["${hcloud_ssh_key.default.id}"]
   provisioner "file" {
-    source = "fedora-atomic.sh"
+    source      = "scripts/fedora-atomic.sh"
     destination = "/tmp/fedora-atomic.sh"
   }
   provisioner "remote-exec" {
     inline = [
-      "chmod +x /tmp/fedora-atomic.sh",
-      "/tmp/fedora-atomic.sh",
-      "shutdown -r +0",
+      "bash /tmp/fedora-atomic.sh"
     ]
   }
   provisioner "file" {
-    source = "consul.sh"
-    destination = "/tmp/consul.sh"
+    source      = "scripts"
+    destination = "/tmp/scripts"
   }
   provisioner "remote-exec" {
     inline = [
-      "hostnamectl set-hostname ${self.name}",
-      "chmod +x /tmp/consul.sh",
-      "/tmp/consul.sh ${self.ipv4_address} ${hcloud_server.atomic.0.ipv4_address} ${self.count} ${self.datacenter}",
+      <<EOF
+        bash /tmp/scripts/setup.sh \
+            ${self.name} \
+            ${self.ipv4_address} \
+            ${hcloud_server.atomic.0.ipv4_address} \
+            ${self.count} \
+            ${self.datacenter} \
+            ${random_string.encryption_key.result} \
+        EOF
     ]
   }
 }

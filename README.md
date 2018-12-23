@@ -1,6 +1,6 @@
 # Fedora Atomic on Hetzner
 
-Deploy the latest [Fedora Atomic](http://www.projectatomic.io/) image on a [Hetzner](https://www.hetzner.com/) VPS using [Terraform](https://www.terraform.io/).
+Deploy the latest [Fedora Atomic](http://www.projectatomic.io/) image on a [Hetzner](https://www.hetzner.com/) VPS using [Terraform](https://www.terraform.io/) and install and configure [Nomad](https://www.nomadproject.io/) and [Consul](https://www.consul.io/).
 
 ## Requirements
 
