@@ -23,7 +23,7 @@ resource "random_string" "encryption_key" {
 resource "hcloud_server" "atomic" {
   count       = 2
   name        = "fedora-atomic-${count.index}"
-  image       = "fedora-28"  # not relevant
+  image       = "fedora-30"  # not relevant
   server_type = "cx11"
   rescue      = "linux64"
   ssh_keys    = ["${hcloud_ssh_key.default.id}"]
