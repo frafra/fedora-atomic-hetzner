@@ -10,4 +10,4 @@ SYSUSER="hashicorp"
 cd "$(dirname ${BASH_SOURCE[0]})"
 chmod +x *.sh
 ./hashicorp-app-setup.sh consul 1.4.0 "${SYSUSER}" "$@"
-./hashicorp-app-setup.sh nomad  0.8.6 "${SYSUSER}" "$@"
+./hashicorp-app-setup.sh nomad  0.9.5 "${SYSUSER}" "$@"
