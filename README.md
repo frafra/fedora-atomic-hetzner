@@ -6,7 +6,7 @@ Deploy the latest [Fedora Atomic](http://www.projectatomic.io/) image on a [Hetz
 
  1. An account on [Hetzner](https://www.hetzner.com/)
  2. An SSH key
- 3. [Terraform](https://www.terraform.io/downloads.html) installed
+ 3. [Terraform](https://www.terraform.io/downloads.html) installed, v0.11 (not compatible with v0.12)
 
 ## Setup
 
